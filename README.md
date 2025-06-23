@@ -16,6 +16,11 @@ https://docs.nestjs.com/techniques/configuration
 3. npm install --save @nestjs/jwt (for jwt Token security-> authentication)
 https://docs.nestjs.com/security/authentication
 
+
+
+nestjs register async jwt (Stack Overflow)
+https://stackoverflow.com/questions/55148743/jwtmodule-registerasync-not-working-in-nestjs
+
 i npm i bcrypt npm i -D @types/bcrypt (Security -> Encryption and Hashing for bcrypt)
 
 
