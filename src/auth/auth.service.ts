@@ -10,13 +10,14 @@ export class AuthService {
     private userService: UserService,
     private jwtService: JwtService,
   ) {}
-  async signUp(createAuthDto: SignUpAuthDTO) {
+  async signUp(signUpAuthDto: SignUpAuthDTO) {
     // 1) Create user
     // 2) Hash Password
     // 3) Save user to database
     // 2) Generate JWT Token
     
-    const user = await this.userService.create(createAuthDto);
+    const user = await this.userService.create(signUpAuthDto);
+
     const payload = {
       id: user.id,
       email: user.email,
