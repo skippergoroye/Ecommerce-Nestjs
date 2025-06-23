@@ -20,7 +20,7 @@ export class AuthController {
 
   @Post('/sign-in')
   async signIn(@Body() signInAuthDTO: SignInAuthDTO) {
-     const accessToken =  await this.authService.signIn(signInAuthDTO);
+     const accessToken = await this.authService.signIn(signInAuthDTO);
 
     return {
       message: 'Sign In successfully',

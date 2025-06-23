@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
 import { SignInAuthDTO } from './dto/sign-in-auth.dto';
 import * as bcrypt from 'bcrypt';
+import { generateToken } from 'src/utils/token.utils';
 
 @Injectable()
 export class AuthService {
@@ -35,7 +36,7 @@ export class AuthService {
     // 1) Find user by email
     const user = await this.userService.findByEmail(signInAuthDto.email);
 
-    if (!user) throw new Error('Email not found');
+    if (!user) throw new BadRequestException('Email not found');
     // 2) Compare password
 
     const isMatch = await bcrypt.compare(signInAuthDto.password, user.password);
@@ -43,15 +44,15 @@ export class AuthService {
     if (!isMatch) throw new BadRequestException('Bad Credentials');
     // 3) issue JWT Token
 
-    const payload = {
-      id: user.id,
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      isActive: user.isActive,
-    };
+    // const payload = {
+    //   id: user.id,
+    //   email: user.email,
+    //   firstName: user.firstName,
+    //   lastName: user.lastName,
+    //   isActive: user.isActive,
+    // };
 
-    const accessToken = await this.jwtService.signAsync(payload);
-    return accessToken;
+    // const accessToken = await this.jwtService.signAsync(payload);
+    return generateToken(user, this.jwtService);
   }
 }
