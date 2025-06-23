@@ -12,6 +12,17 @@ https://docs.nestjs.com/techniques/configuration
 
 
 
+# Authentication
+3. npm install --save @nestjs/jwt (for jwt Token security-> authentication)
+https://docs.nestjs.com/security/authentication
+
+i npm i bcrypt npm i -D @types/bcrypt (Security -> Encryption and Hashing for bcrypt)
+
+
+
+
+
+
 
 
 
