@@ -10,8 +10,7 @@ export class AuthController {
 
   @Post()
   async signUp(@Body() createAuthDto: SignUpAuthDTO) {
-    const accessToken =  this.authService.signUp(createAuthDto);
-
+    const accessToken =  await this.authService.signUp(createAuthDto);
 
     return {
       message: 'Sign up successfully',
