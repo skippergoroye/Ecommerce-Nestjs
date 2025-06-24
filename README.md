@@ -12,7 +12,7 @@ https://docs.nestjs.com/techniques/configuration
 
 
 
-# Authentication
+# Authentication / Authorization
 3. npm install --save @nestjs/jwt (for jwt Token security-> authentication)
 https://docs.nestjs.com/security/authentication
 
