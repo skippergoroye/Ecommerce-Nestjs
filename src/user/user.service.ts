@@ -35,4 +35,9 @@ export class UserService {
 
     return user;
   }
+
+
+  findAll() {
+    return `This action returns all users`;
+  }
 }
