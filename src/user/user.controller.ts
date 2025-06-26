@@ -4,6 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from 'src/cores/guards/auth.gaurds';
 import { CurrentUser } from 'src/cores/decorators/current-user.decorator';
+import { UserPayload } from './interfaces/user-payload.interface';
 
 @Controller('api/v1/users')
 export class UserController {
@@ -17,7 +18,7 @@ export class UserController {
 
   @Get('/me')
   @UseGuards(AuthGuard)
-  getCurrentUser(@CurrentUser() user) {
+  getCurrentUser(@CurrentUser() user: UserPayload) {
 
     // // @ts-ignore
     // return req.currentUser;
