@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     // console.log(request.headers);
 
     const token = request.headers?.authorization?.split(' ')[1];
-    if (!token) throw new UnauthorizedException('No token provided');
+    if (!token) throw new UnauthorizedException('Please provide a token');
     // console.log(token);
     // verify  Jwt Payload
 
@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
         secret: this.configService.get<string>('JWT_SECRET_KEY'),
       });
 
-      console.log('Check Current User', currentUser);
+      // console.log('Check Current User', currentUser);
 
       request.user = currentUser;
       return true;
