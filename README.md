@@ -1,3 +1,13 @@
+# Udemy
+Course Name: Building Scalable Projects with NestJS: Advanced Authorization, Real-Time Notifications, Email Integration, and More
+
+
+https://www.udemy.com/course/nestjs-ultimate-backend-development-with-nodejs-framework/
+
+
+
+
+
 # Installations
 1. npm install --save @nestjs/typeorm typeorm pg (typeorm postgres)
 # https://docs.nestjs.com/techniques/database
@@ -28,6 +38,22 @@ https://docs.nestjs.com/guards
 iii-> Storing token in postman (https://www.youtube.com/watch?v=8Hpn-NJL0HI)
 
 iv-> (overview -> custom decorators)
+
+
+
+4. Typeorm Relationship
+https://typeorm.io/docs/relations/many-to-one-one-to-many-relations
+
+
+
+
+5. Data Validation using class Validation
+-> https://docs.nestjs.com/techniques/validation
+
+npm i --save class-validator class-transformer
+
+
+(Database connection) -> https://docs.nestjs.com/techniques/database
 
 
 

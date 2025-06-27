@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { RoleModule } from './role/role.module';
+import { Role } from './role/entities/role.entity';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { RoleModule } from './role/role.module';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
-        entities: [User], 
+        entities: [User, Role], 
         synchronize: false,
         logging: true, // Enable logging for debugging
       }),
