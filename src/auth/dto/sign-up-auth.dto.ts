@@ -8,4 +8,7 @@ export class SignUpAuthDTO {
   email: string;
 
   password: string;
+
+
+  role: string;
 }
