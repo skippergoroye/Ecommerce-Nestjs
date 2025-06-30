@@ -91,3 +91,8 @@ npm run build
 npm run migration:generate -- src/migrations/AddDescriptionFiveToTask
 npm run migration:run
 
+
+
+# SQL QUERY
+DELETE FROM role WHERE name = 'skipper'
+
