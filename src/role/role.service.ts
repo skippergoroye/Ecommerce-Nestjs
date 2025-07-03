@@ -42,7 +42,10 @@ export class RoleService {
     return this.roleRepository.save(role)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} role`;
+  async remove(name: string) {
+    const role = await this.getRole(name);
+
+    role.isActive = false 
+    await this.roleRepository.save(role)
   }
 }
