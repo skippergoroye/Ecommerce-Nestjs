@@ -2,8 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
+import { TransformDTO } from 'src/cores/interceptors/transform-dto.interceptor';
+import { ResponseRoleDto } from './dto/response-role.dto';
 
 @Controller('api/v1/roles')
+@TransformDTO(ResponseRoleDto)
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
