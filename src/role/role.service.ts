@@ -31,12 +31,15 @@ export class RoleService {
     return roles
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} role`;
-  }
+  
 
-  update(id: number, updateRoleDto: UpdateRoleDto) {
-    return `This action updates a #${id} role`;
+  async update(name: string, updateRoleDto: UpdateRoleDto) {
+    const role  = await this.getRole(name)
+
+    role.description = updateRoleDto.description
+
+
+    return this.roleRepository.save(role)
   }
 
   remove(id: number) {
