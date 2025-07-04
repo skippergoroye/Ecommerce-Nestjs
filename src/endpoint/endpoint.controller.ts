@@ -3,7 +3,7 @@ import { EndpointService } from './endpoint.service';
 import { CreateEndpointDto } from './dto/create-endpoint.dto';
 import { UpdateEndpointDto } from './dto/update-endpoint.dto';
 
-@Controller('endpoint')
+@Controller('api/v1/endpoints')
 export class EndpointController {
   constructor(private readonly endpointService: EndpointService) {}
 
