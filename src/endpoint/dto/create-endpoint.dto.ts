@@ -1,5 +1,10 @@
-import { IsNotEmpty } from "class-validator";
+import { IsIn, IsNotEmpty } from "class-validator";
 import { HttpMethod } from "../entities/endpoint.entity";
+
+
+
+
+const httpMethods = ['GET', 'POST', 'PUT', 'DELETE']
 
 export class CreateEndpointDto {
     @IsNotEmpty()
@@ -8,5 +13,6 @@ export class CreateEndpointDto {
 
 
     @IsNotEmpty()
+    @IsIn(httpMethods)
     method: HttpMethod
 }

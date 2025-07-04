@@ -94,5 +94,13 @@ npm run migration:run
 
 
 # SQL QUERY
-DELETE FROM role WHERE name = 'skipper'
+1.
+DELETE FROM role 
+WHERE name = 'skipper'
+
+
+
+2.
+DELETE FROM endpoint
+where id = 2
 
