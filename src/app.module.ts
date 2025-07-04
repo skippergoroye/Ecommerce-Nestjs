@@ -8,6 +8,8 @@ import { User } from './user/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { RoleModule } from './role/role.module';
 import { Role } from './role/entities/role.entity';
+import { EndpointModule } from './endpoint/endpoint.module';
+import { Endpoint } from './endpoint/entities/endpoint.entity';
 
 @Module({
   imports: [
@@ -25,7 +27,7 @@ import { Role } from './role/entities/role.entity';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
-        entities: [User, Role], 
+        entities: [User, Role, Endpoint], 
         synchronize: false,
         logging: true, // Enable logging for debugging
       }),
@@ -35,6 +37,7 @@ import { Role } from './role/entities/role.entity';
     UserModule,
     AuthModule,
     RoleModule,
+    EndpointModule,
   ],
   controllers: [AppController],
   providers: [AppService],
