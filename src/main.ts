@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { DataSource } from 'typeorm';
+import { DataSource, QueryRunner } from 'typeorm';
 import { getAllRoutes } from './utils/app.utils';
 import { Endpoint, HttpMethod } from './endpoint/entities/endpoint.entity';
 
@@ -23,14 +23,16 @@ async function bootstrap() {
   const { routes } = getAllRoutes(router);
 
   const dataSource = app.get(DataSource);
+  const queryRunner = dataSource.createQueryRunner();
 
   try {
-    console.log('Attempting to truncate table...');
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
     await dataSource.query('TRUNCATE endpoint RESTART IDENTITY CASCADE');
 
     for (const route of routes) {
       const [method, url] = route.split(' ');
-      await dataSource
+      queryRunner.manager
         .createQueryBuilder()
         .insert()
         .into(Endpoint)
@@ -38,8 +40,11 @@ async function bootstrap() {
         .execute();
     }
 
+    await queryRunner.commitTransaction();
+
     console.log('Insert all routes into DB Successfully!');
   } catch (error) {
+    await queryRunner.rollbackTransaction();
     console.error('Failed to truncate or insert routes:', error);
   }
 
