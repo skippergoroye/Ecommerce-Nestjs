@@ -57,6 +57,13 @@ npm i --save class-validator class-transformer
 
 
 
+6. How to het all Endpoints
+   nestjs how to get all endpoint
+   https://stackoverflow.com/questions/58255000/how-can-i-get-all-the-routes-from-all-the-modules-and-controllers-available-on
+
+
+
+
 
 
 
