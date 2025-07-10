@@ -28,8 +28,11 @@ async function bootstrap() {
   try {
     await queryRunner.connect();
     await queryRunner.startTransaction();
+
+    // DELETE ALL Routes
     await dataSource.query('TRUNCATE endpoint RESTART IDENTITY CASCADE');
 
+    // ADD Routes Routes
     for (const route of routes) {
       const [method, url] = route.split(' ');
       queryRunner.manager

@@ -61,6 +61,8 @@ npm i --save class-validator class-transformer
    nestjs how to get all endpoint
    https://stackoverflow.com/questions/58255000/how-can-i-get-all-the-routes-from-all-the-modules-and-controllers-available-on
 
+7. npm nest g resource femi
+
 
 
 
@@ -97,6 +99,15 @@ npm i --save class-validator class-transformer
 npm run build
 npm run migration:generate -- src/migrations/AddDescriptionFiveToTask
 npm run migration:run
+
+
+
+
+
+
+
+
+
 
 
 
