@@ -1,26 +1,29 @@
-import { Injectable } from '@nestjs/common';
-import { CreatePermissionDto } from './dto/create-permission.dto';
-import { UpdatePermissionDto } from './dto/update-permission.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { AllowPermissionDto } from './dto/allow-permission.dto';
+import { permission } from 'process';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Permission } from './entities/permission.entity';
 
 @Injectable()
 export class PermissionsService {
-  create(createPermissionDto: CreatePermissionDto) {
-    return 'This action adds a new permission';
-  }
+  constructor(
+    @InjectRepository(Permission)
+    private permissionRepository: Repository<Permission>,
+  ) {}
 
-  findAll() {
-    return `This action returns all permissions`;
-  }
+  async allow(allowPermissionDto: AllowPermissionDto) {
+    const permission = await this.permissionRepository.findOne({
+      where: {
+        roleName: allowPermissionDto.roleName,
+        endpointId: String(allowPermissionDto.endpointId),
+      },
+    });
 
-  findOne(id: number) {
-    return `This action returns a #${id} permission`;
-  }
+    if (!permission) throw new NotFoundException(`Not found permission`);
 
-  update(id: number, updatePermissionDto: UpdatePermissionDto) {
-    return `This action updates a #${id} permission`;
-  }
+    permission.isAllow = allowPermissionDto.isAllow;
 
-  remove(id: number) {
-    return `This action removes a #${id} permission`;
+    return this.permissionRepository.save(permission);
   }
 }

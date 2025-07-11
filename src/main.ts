@@ -1,9 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { DataSource, QueryRunner } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { getAllRoutes } from './utils/app.utils';
 import { Endpoint, HttpMethod } from './endpoint/entities/endpoint.entity';
+import { Role } from './role/entities/role.entity';
+import { Permission } from './permissions/entities/permission.entity';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,12 +16,11 @@ async function bootstrap() {
     credentials: true,
   });
 
-  // Start the server first so the routes are available
+  // Start the server first so routes are registered
   await app.listen(process.env.PORT ?? 3000);
 
   const server = app.getHttpServer();
   const router = server._events.request._router;
-
   const { routes } = getAllRoutes(router);
 
   const dataSource = app.get(DataSource);
@@ -29,13 +30,14 @@ async function bootstrap() {
     await queryRunner.connect();
     await queryRunner.startTransaction();
 
-    // DELETE ALL Routes
-    await dataSource.query('TRUNCATE endpoint RESTART IDENTITY CASCADE');
+    console.log('Truncating tables...');
+    await queryRunner.query('TRUNCATE endpoint RESTART IDENTITY CASCADE');
+    await queryRunner.query('TRUNCATE permission RESTART IDENTITY CASCADE');
 
-    // ADD Routes Routes
+    // Insert all routes into the endpoint table
     for (const route of routes) {
       const [method, url] = route.split(' ');
-      queryRunner.manager
+      await queryRunner.manager
         .createQueryBuilder()
         .insert()
         .into(Endpoint)
@@ -43,14 +45,42 @@ async function bootstrap() {
         .execute();
     }
 
-    await queryRunner.commitTransaction();
+    const roles = await queryRunner.manager
+      .getRepository(Role)
+      .createQueryBuilder('role')
+      .where('role.isActive = :isActive', { isActive: true })
+      .getMany();
 
+    const endpoints = await queryRunner.manager
+      .getRepository(Endpoint)
+      .createQueryBuilder('endpoint')
+      .getMany();
+
+    for (const role of roles) {
+      for (const endpoint of endpoints) {
+        await queryRunner.manager
+          .createQueryBuilder()
+          .insert()
+          .into(Permission)
+          .values({
+            endpointId: endpoint.id.toString(),
+            roleName: role.name,
+
+            isAllow: role.name === 'admin' ? true : false
+          })
+          .execute();
+      }
+    }
+
+    await queryRunner.commitTransaction();
     console.log('Insert all routes into DB Successfully!');
   } catch (error) {
     await queryRunner.rollbackTransaction();
     console.error('Failed to truncate or insert routes:', error);
+  } finally {
+    await queryRunner.release();
   }
 
   console.log(`Application is running on: ${process.env.PORT ?? 3000}`);
 }
-bootstrap();
+bootstrap()

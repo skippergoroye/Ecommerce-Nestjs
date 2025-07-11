@@ -4,37 +4,26 @@ import {
   Column,
   Entity,
   JoinColumn,
-  ManyToMany,
+  ManyToOne,
   PrimaryColumn,
-  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity()
 export class Permission {
-  // @PrimaryGeneratedColumn()
-  // id: number;
-
-  // @ManyToMany(() => Role, (role) => role.permissions)
-  // role: Role;
-
-  // @ManyToMany(() => Role, (role) => role.permissions)
-  // endpoint: Endpoint;
-  // isAllow: boolean;
-
   @PrimaryColumn()
   roleName: string;
 
   @PrimaryColumn()
   endpointId: string;
 
-  @ManyToMany(() => Role, (role) => role.permissions)
-  @JoinColumn({ name: 'rolename' })
+  @ManyToOne(() => Role, (role) => role.permissions, { eager: false })
+  @JoinColumn({ name: 'roleName', referencedColumnName: 'name' })
   role: Role;
 
-  @ManyToMany(() => Endpoint, (endpoint) => endpoint.permissions)
-  @JoinColumn({ name: 'endpointId' })
+  @ManyToOne(() => Endpoint, (endpoint) => endpoint.permissions, { eager: false })
+  @JoinColumn({ name: 'endpointId', referencedColumnName: 'id' })
   endpoint: Endpoint;
-    
-  @Column({ default: false})
+
+  @Column({ default: false })
   isAllow: boolean;
 }
