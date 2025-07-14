@@ -13,6 +13,7 @@ import { Endpoint } from './endpoint/entities/endpoint.entity';
 import { PermissionsModule } from './permissions/permissions.module';
 import { Permission } from './permissions/entities/permission.entity';
 import { CategoryModule } from './category/category.module';
+import { Category } from './category/entities/category.entity';
 
 
 @Module({
@@ -31,7 +32,7 @@ import { CategoryModule } from './category/category.module';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
-        entities: [User, Role, Endpoint, Permission], 
+        entities: [User, Role, Endpoint, Permission, Category ], 
         synchronize: false,
         logging: true, // Enable logging for debugging
       }),

@@ -68,6 +68,16 @@ npm i --save class-validator class-transformer
 
 
 
+8. Adding swagger
+npm install --save @nestjs/swagger
+https://docs.nestjs.com/openapi/introduction
+
+
+
+
+
+
+
 
 
 

@@ -6,6 +6,7 @@ import { getAllRoutes } from './utils/app.utils';
 import { Endpoint, HttpMethod } from './endpoint/entities/endpoint.entity';
 import { Role } from './role/entities/role.entity';
 import { Permission } from './permissions/entities/permission.entity';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,8 +17,20 @@ async function bootstrap() {
     credentials: true,
   });
 
+
+    const config = new DocumentBuilder()
+    .setTitle('Cats example')
+    .setDescription('The cats API description')
+    .setVersion('1.0')
+    .addTag('cats')
+    .build();
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, documentFactory);
+
   // Start the server first so routes are registered
   await app.listen(process.env.PORT ?? 3000);
+
+
 
   const server = app.getHttpServer();
   const router = server._events.request._router;
