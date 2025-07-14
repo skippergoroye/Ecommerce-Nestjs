@@ -1,5 +1,10 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { SignUpAuthDTO } from './sign-up-auth.dto';
+import { ApiProperty } from '@nestjs/swagger';
 
 
-export class SignInAuthDTO extends PartialType(SignUpAuthDTO) {}
+export class SignInAuthDTO  {
+     @ApiProperty({ default : 'admin@gmail.com'})
+      email: string;
+    
+      @ApiProperty({ default : 'test1234'})
+      password: string;
+}
