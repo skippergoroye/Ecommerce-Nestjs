@@ -12,6 +12,7 @@ import { EndpointModule } from './endpoint/endpoint.module';
 import { Endpoint } from './endpoint/entities/endpoint.entity';
 import { PermissionsModule } from './permissions/permissions.module';
 import { Permission } from './permissions/entities/permission.entity';
+import { CategoryModule } from './category/category.module';
 
 
 @Module({
@@ -42,6 +43,7 @@ import { Permission } from './permissions/entities/permission.entity';
     RoleModule,
     EndpointModule,
     PermissionsModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
