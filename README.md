@@ -47,6 +47,9 @@ npm i --save class-validator class-transformer
 
 7. npm nest g resource femi
 
+
+
+
 8. Adding swagger
 npm install --save @nestjs/swagger
 https://docs.nestjs.com/openapi/introduction
