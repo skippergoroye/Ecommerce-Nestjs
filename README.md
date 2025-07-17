@@ -64,6 +64,12 @@ https://docs.nestjs.com/openapi/types-and-parameters
 
 
 
+9. Slug
+npm i slugify
+
+
+
+
 
 
 

@@ -11,15 +11,21 @@ export class CategoryService {
       @InjectRepository(Category)
       private categoryRepository: Repository<Category>,
     ) {}
-  create(createCategoryDto: CreateCategoryDto) {
-    const category = new Category()
+  // create(createCategoryDto: CreateCategoryDto) {
+  //   const category = new Category()
 
 
-    Object.assign(category, CreateCategoryDto)
+  //   Object.assign(category, CreateCategoryDto)
 
 
-    return this.categoryRepository.save(category);
-  }
+  //   return this.categoryRepository.save(category);
+  // }
+
+
+  async create(createCategoryDto: CreateCategoryDto) {
+  const category = this.categoryRepository.create(createCategoryDto);
+  return await this.categoryRepository.save(category);
+}
 
   
 }
