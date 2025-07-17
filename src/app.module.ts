@@ -14,6 +14,7 @@ import { PermissionsModule } from './permissions/permissions.module';
 import { Permission } from './permissions/entities/permission.entity';
 import { CategoryModule } from './category/category.module';
 import { Category } from './category/entities/category.entity';
+import { TestModule } from './test/test.module';
 
 
 @Module({
@@ -45,6 +46,7 @@ import { Category } from './category/entities/category.entity';
     EndpointModule,
     PermissionsModule,
     CategoryModule,
+    TestModule,
   ],
   controllers: [AppController],
   providers: [AppService],
