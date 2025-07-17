@@ -30,7 +30,7 @@ export class CategoryService {
     return  categories;
   }
 
-  async findOne(id: string) {
+  async findOne(id: number) {
     const category = await this.categoryRepository.findOne({ where: { id } });
 
     if(!category) throw new NotFoundException(`Category ${id} not found`);
