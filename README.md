@@ -69,6 +69,11 @@ npm i slugify
 
 
 
+10. what is this used for in nestjs ParseIntPipe
+In NestJS, ParseIntPipe is a built-in pipe used to automatically convert a string to a number—usually in route parameters. It's especially useful when your route parameter is expected to be a number (like an id) but comes in as a string (which is how all URL params are received).
+
+
+
 
 
 
