@@ -3,6 +3,7 @@ import {
   BeforeInsert,
   BeforeUpdate,
   Column,
+  DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -22,8 +23,13 @@ export class Category {
   slug: string;
 
 
-  @Column({default: true})
-  isActive: boolean;
+  // @Column({default: true})
+  // isActive: boolean;
+
+
+  @DeleteDateColumn()
+  dateDeleted: Date;
+
 
   @BeforeInsert()
   @BeforeUpdate()

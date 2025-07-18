@@ -11,30 +11,20 @@ export class CategoryService {
     @InjectRepository(Category)
     private categoryRepository: Repository<Category>,
   ) {}
-  // create(createCategoryDto: CreateCategoryDto) {
-  //   const category = new Category()
-
-  //   Object.assign(category, CreateCategoryDto)
-
-  //   return this.categoryRepository.save(category);
-  // }
-
   async create(createCategoryDto: CreateCategoryDto) {
     const category = this.categoryRepository.create(createCategoryDto);
     return await this.categoryRepository.save(category);
   }
 
   async findAll() {
-    const categories = await this.categoryRepository.find({
-      where: { isActive: true },
-    });
+    const categories = await this.categoryRepository.find();
 
     return categories;
   }
 
   async findOne(id: number) {
     const category = await this.categoryRepository.findOne({
-      where: { id, isActive: true },
+      where: { id },
     });
 
     if (!category) throw new NotFoundException(`Category ${id} not found`);
@@ -53,8 +43,6 @@ export class CategoryService {
   async remove(id: number) {
     const category = await this.findOne(id);
 
-    category.isActive = false;
-
-    await this.categoryRepository.save(category);
+    await this.categoryRepository.softRemove(category);
   }
 }

@@ -47,37 +47,21 @@ npm i --save class-validator class-transformer
 
 7. npm nest g resource femi
 
-
-
-
 8. Adding swagger
-npm install --save @nestjs/swagger
-https://docs.nestjs.com/openapi/introduction
+   npm install --save @nestjs/swagger
+   https://docs.nestjs.com/openapi/introduction
 
 Google --> nestjs send 200 for post method
 https://stackoverflow.com/questions/58824401/disable-status-201-for-all-posts-in-nestjs
 https://docs.nestjs.com/controllers (Status code)
 
-
-
 https://docs.nestjs.com/openapi/types-and-parameters
 
-
-
 9. Slug
-npm i slugify
-
-
+   npm i slugify
 
 10. what is this used for in nestjs ParseIntPipe
-In NestJS, ParseIntPipe is a built-in pipe used to automatically convert a string to a number—usually in route parameters. It's especially useful when your route parameter is expected to be a number (like an id) but comes in as a string (which is how all URL params are received).
-
-
-
-
-
-
-
+    In NestJS, ParseIntPipe is a built-in pipe used to automatically convert a string to a number—usually in route parameters. It's especially useful when your route parameter is expected to be a number (like an id) but comes in as a string (which is how all URL params are received).
 
 
 
@@ -86,10 +70,19 @@ In NestJS, ParseIntPipe is a built-in pipe used to automatically convert a strin
 
 
 # Chatgpt Command For Migration
-
 npm run build
 npm run migration:generate -- src/migrations/AddDescriptionFiveToTask
 npm run migration:run
+
+# To show the list of Migration
+npm run typeorm migration:show -- -d typeorm.config.ts
+
+
+
+
+NOTE: 
+-> npm run migration:run
+If you get errors like relation "category" already exists, that means the migration is trying to recreate a table instead of altering it — in that case, delete the migration, clean it up, and regenerate.
 
 # SQL QUERY
 
