@@ -1,18 +1,16 @@
 import slugify from 'slugify';
-import { Product } from 'src/product/entities/product.entity';
+import { Category } from 'src/category/entities/category.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
-  DeleteDateColumn,
   Entity,
   ManyToMany,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity()
-export class Category {
+export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -20,22 +18,24 @@ export class Category {
   name: string;
 
   @Column()
-  description: string;
+  price: number;
+
+  @Column({ nullable: true })
+  offerPrice: number;
 
   @Column()
+  shortDescription: string;
+
+  @Column({ nullable: true })
+  longDescription: string;
+
+  @Column()
+  quantity: number;
+
+
   slug: string;
-
-  // @Column({default: true})
-  // isActive: boolean;
-
-  @DeleteDateColumn()
-  dateDeleted: Date;
-
-  @ManyToMany(() => Category, (c) => c.parent)
-  parent: Category;
-
-  @OneToMany(() => Product, (p) => p.category)
-  products: Product[];
+  @ManyToMany(() => Category, (category) => category.products)
+  category: Category[];
 
   @BeforeInsert()
   @BeforeUpdate()

@@ -15,6 +15,8 @@ import { Permission } from './permissions/entities/permission.entity';
 import { CategoryModule } from './category/category.module';
 import { Category } from './category/entities/category.entity';
 import { TestModule } from './test/test.module';
+import { ProductModule } from './product/product.module';
+import { Product } from './product/entities/product.entity';
 
 
 @Module({
@@ -33,7 +35,8 @@ import { TestModule } from './test/test.module';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
-        entities: [User, Role, Endpoint, Permission, Category ], 
+        // entities: [User, Role, Endpoint, Permission, Category], 
+        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: false,
         logging: true, // Enable logging for debugging
       }),
@@ -47,6 +50,7 @@ import { TestModule } from './test/test.module';
     PermissionsModule,
     CategoryModule,
     TestModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],

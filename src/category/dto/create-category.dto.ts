@@ -8,4 +8,8 @@ export class CreateCategoryDto {
   @IsNotEmpty()
     @IsString()
   description: string;
+
+
+
+  parentId: number;
 }
