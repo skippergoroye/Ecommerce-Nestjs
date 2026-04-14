@@ -91,3 +91,13 @@ If you get errors like relation "category" already exists, that means the migrat
 
 2.  DELETE FROM endpoint
     where id = 2
+
+# Env
+
+DB_HOST=localhost
+DB_PORT= 5432
+DB_USERNAME=postgres
+DB_PASSWORD=skipper
+DB_DATABASE=ecommerce-nestjs
+JWT_SECRET_KEY=your_jwt_secret
+JWT_EXPIRE_DAY=1d
