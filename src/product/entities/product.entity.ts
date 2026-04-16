@@ -10,6 +10,7 @@ import {
   JoinTable,
   ManyToOne,
   JoinColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -57,4 +58,8 @@ export class Product {
       throw new Error('Category name is required for slug generation');
     }
   }
+
+
+   @DeleteDateColumn()
+  deletedAt?: Date;
 }
