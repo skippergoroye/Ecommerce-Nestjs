@@ -101,3 +101,15 @@ DB_PASSWORD=skipper
 DB_DATABASE=ecommerce-nestjs
 JWT_SECRET_KEY=your_jwt_secret
 JWT_EXPIRE_DAY=1d
+
+
+
+
+
+Delete The Last Commit
+Option 2: Remove the last commit completely (rewrite history)
+
+If you're sure no one else is using that commit:
+
+git reset --hard HEAD~1
+git push origin master --force
