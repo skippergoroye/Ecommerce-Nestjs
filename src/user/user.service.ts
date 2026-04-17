@@ -40,7 +40,10 @@ export class UserService {
   }
 
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    const users = await this.usersRepository.find({ relations: {role: true}})
+
+    // console.log("users", users)
+    return users;
   }
 }

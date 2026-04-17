@@ -18,6 +18,7 @@ import { TestModule } from './test/test.module';
 import { ProductModule } from './product/product.module';
 import { Product } from './product/entities/product.entity';
 import { UploadModule } from './upload/upload.module';
+import { VariantsModule } from './variants/variants.module';
 
 
 @Module({
@@ -53,6 +54,7 @@ import { UploadModule } from './upload/upload.module';
     TestModule,
     ProductModule,
     UploadModule,
+    VariantsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

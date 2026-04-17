@@ -5,8 +5,11 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from 'src/cores/guards/auth.gaurds';
 import { CurrentUser } from 'src/cores/decorators/current-user.decorator';
 import { UserPayload } from './interfaces/user-payload.interface';
+import { TransformDTO } from 'src/cores/interceptors/transform-dto.interceptor';
+import { ResponseUserDto } from './dto/response-user.dto';
 
 @Controller('api/v1/users')
+@TransformDTO(ResponseUserDto)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -23,6 +26,12 @@ export class UserController {
     // // @ts-ignore
     // return req.currentUser;
     return user;
+  }
+
+  @Get()
+  // @UseGuards(AuthGuard)
+  findAll() {
+    return this.userService.findAll();
   }
 
 
