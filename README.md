@@ -119,3 +119,12 @@ git push origin master --force
 # For Pagination
 npm i nestjs-paginate
 https://www.npmjs.com/package/nestjs-paginate
+
+
+
+
+FIle Upload
+npm i -D @types/multer
+npm install --save-dev @types/multer
+
+npm install cloudinary streamifier && npm install -D @types/streamifier

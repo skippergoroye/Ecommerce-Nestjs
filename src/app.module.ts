@@ -17,6 +17,7 @@ import { Category } from './category/entities/category.entity';
 import { TestModule } from './test/test.module';
 import { ProductModule } from './product/product.module';
 import { Product } from './product/entities/product.entity';
+import { UploadModule } from './upload/upload.module';
 
 
 @Module({
@@ -51,6 +52,7 @@ import { Product } from './product/entities/product.entity';
     CategoryModule,
     TestModule,
     ProductModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],
