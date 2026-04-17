@@ -22,8 +22,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class UploadController {
   constructor(private readonly uploadService: UploadService) {}
 
-  @Post()
-  @UseInterceptors(FileInterceptor('productImage'))
+  @Post(':type')
+  @UseInterceptors(FileInterceptor('file'))
   async uploadFile(
     @UploadedFile(
       new ParseFilePipe({
