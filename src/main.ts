@@ -32,67 +32,67 @@ async function bootstrap() {
 
 
 
-  const server = app.getHttpServer();
-  const router = server._events.request._router;
-  const { routes } = getAllRoutes(router);
+  // const server = app.getHttpServer();
+  // const router = server._events.request._router;
+  // const { routes } = getAllRoutes(router);
 
-  const dataSource = app.get(DataSource);
-  const queryRunner = dataSource.createQueryRunner();
+  // const dataSource = app.get(DataSource);
+  // const queryRunner = dataSource.createQueryRunner();
 
-  try {
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
+  // try {
+  //   await queryRunner.connect();
+  //   await queryRunner.startTransaction();
 
-    console.log('Truncating tables...');
-    await queryRunner.query('TRUNCATE endpoint RESTART IDENTITY CASCADE');
-    await queryRunner.query('TRUNCATE permission RESTART IDENTITY CASCADE');
+  //   console.log('Truncating tables...');
+  //   await queryRunner.query('TRUNCATE endpoint RESTART IDENTITY CASCADE');
+  //   await queryRunner.query('TRUNCATE permission RESTART IDENTITY CASCADE');
 
-    // Insert all routes into the endpoint table
-    for (const route of routes) {
-      const [method, url] = route.split(' ');
-      await queryRunner.manager
-        .createQueryBuilder()
-        .insert()
-        .into(Endpoint)
-        .values({ url, method: method as HttpMethod })
-        .execute();
-    }
+  //   // Insert all routes into the endpoint table
+  //   for (const route of routes) {
+  //     const [method, url] = route.split(' ');
+  //     await queryRunner.manager
+  //       .createQueryBuilder()
+  //       .insert()
+  //       .into(Endpoint)
+  //       .values({ url, method: method as HttpMethod })
+  //       .execute();
+  //   }
 
-    const roles = await queryRunner.manager
-      .getRepository(Role)
-      .createQueryBuilder('role')
-      .where('role.isActive = :isActive', { isActive: true })
-      .getMany();
+  //   const roles = await queryRunner.manager
+  //     .getRepository(Role)
+  //     .createQueryBuilder('role')
+  //     .where('role.isActive = :isActive', { isActive: true })
+  //     .getMany();
 
-    const endpoints = await queryRunner.manager
-      .getRepository(Endpoint)
-      .createQueryBuilder('endpoint')
-      .getMany();
+  //   const endpoints = await queryRunner.manager
+  //     .getRepository(Endpoint)
+  //     .createQueryBuilder('endpoint')
+  //     .getMany();
 
-    for (const role of roles) {
-      for (const endpoint of endpoints) {
-        await queryRunner.manager
-          .createQueryBuilder()
-          .insert()
-          .into(Permission)
-          .values({
-            endpointId: endpoint.id.toString(),
-            roleName: role.name,
+  //   for (const role of roles) {
+  //     for (const endpoint of endpoints) {
+  //       await queryRunner.manager
+  //         .createQueryBuilder()
+  //         .insert()
+  //         .into(Permission)
+  //         .values({
+  //           endpointId: endpoint.id.toString(),
+  //           roleName: role.name,
 
-            isAllow: role.name === 'admin' ? true : false
-          })
-          .execute();
-      }
-    }
+  //           isAllow: role.name === 'admin' ? true : false
+  //         })
+  //         .execute();
+  //     }
+  //   }
 
-    await queryRunner.commitTransaction();
-    console.log('Insert all routes into DB Successfully!');
-  } catch (error) {
-    await queryRunner.rollbackTransaction();
-    console.error('Failed to truncate or insert routes:', error);
-  } finally {
-    await queryRunner.release();
-  }
+  //   await queryRunner.commitTransaction();
+  //   console.log('Insert all routes into DB Successfully!');
+  // } catch (error) {
+  //   await queryRunner.rollbackTransaction();
+  //   console.error('Failed to truncate or insert routes:', error);
+  // } finally {
+  //   await queryRunner.release();
+  // }
 
   console.log(`Application is running on: ${process.env.PORT ?? 3000}`);
 }

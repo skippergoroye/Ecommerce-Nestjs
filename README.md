@@ -113,3 +113,9 @@ If you're sure no one else is using that commit:
 
 git reset --hard HEAD~1
 git push origin master --force
+
+
+
+# For Pagination
+npm i nestjs-paginate
+https://www.npmjs.com/package/nestjs-paginate
