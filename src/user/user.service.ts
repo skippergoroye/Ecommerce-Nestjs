@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -12,10 +12,10 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    private roleService: RoleService
+    private roleService: RoleService,
   ) {}
   async create(createUserDto: CreateUserDto) {
-    const role = await this.roleService.getRole('user')
+    const role = await this.roleService.getRole('user');
     const existingUser = await this.usersRepository.findOne({
       where: { email: createUserDto.email },
     });
@@ -39,11 +39,41 @@ export class UserService {
     return user;
   }
 
-
   async findAll() {
-    const users = await this.usersRepository.find({ relations: {role: true}})
+    const users = await this.usersRepository.find({
+      relations: { role: true },
+    });
 
     // console.log("users", users)
     return users;
+  }
+
+  async findOne(id: number) {
+    const user = await this.usersRepository.findOne({
+      where: { id },
+      relations: { role: true },
+    });
+
+    if (!user) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+
+    return user;
+  }
+
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const user = await this.findOne(id);
+
+
+
+    console.log("updateUserDto", updateUserDto)
+
+
+    user.firstName = updateUserDto.firstName ? updateUserDto.firstName : updateUserDto.firstName;
+    user.lastName = updateUserDto.lastName ? updateUserDto.lastName : updateUserDto.lastName;
+
+
+
+    return this.usersRepository.save(user);
   }
 }

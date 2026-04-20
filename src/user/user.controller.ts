@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Req,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -18,11 +29,9 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-
   @Get('/me')
   @UseGuards(AuthGuard)
   getCurrentUser(@CurrentUser() user: UserPayload) {
-
     // // @ts-ignore
     // return req.currentUser;
     return user;
@@ -34,6 +43,21 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  @Get(':id')
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.findOne(id);
+  }
 
+  @Patch(':id')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() UpdateUserDto: UpdateUserDto,
+  ) {
+    return this.userService.update(id, UpdateUserDto)
+  }
 
+  @Delete(':id')
+  remove(@Param('id', ParseIntPipe) id: string) {
+    // return this.userService.remove(+id)
+  }
 }
