@@ -54,13 +54,13 @@ export class UserController {
     return this.userService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch('/me')
   @UseGuards(AuthGuard)
   updateMe(
-    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() user: UserPayload,
     @Body() UpdateUserDto: UpdateUserDto,
   ) {
-    return this.userService.update(id, UpdateUserDto);
+    return this.userService.updateMe(user, UpdateUserDto);
   }
 
   @Patch(':id')
