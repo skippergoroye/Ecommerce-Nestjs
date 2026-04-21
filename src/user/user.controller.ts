@@ -18,8 +18,10 @@ import { CurrentUser } from 'src/cores/decorators/current-user.decorator';
 import { UserPayload } from './interfaces/user-payload.interface';
 import { TransformDTO } from 'src/cores/interceptors/transform-dto.interceptor';
 import { ResponseUserDto } from './dto/response-user.dto';
+import { ChangePwdUserDto } from './dto/change-pwd-user.dto';
 
 @Controller('api/v1/users')
+@UseGuards(AuthGuard)
 @TransformDTO(ResponseUserDto)
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -30,11 +32,15 @@ export class UserController {
   }
 
   @Get('/me')
-  @UseGuards(AuthGuard)
   getCurrentUser(@CurrentUser() user: UserPayload) {
     // // @ts-ignore
     // return req.currentUser;
     return user;
+  }
+
+  @Post('/change-password')
+  changeMyPassword(@Body() ChangePwdUserDto, @CurrentUser() user: UserPayload) {
+    return this.userService.changeMyPassword(ChangePwdUserDto, user);
   }
 
   @Get()
@@ -49,15 +55,24 @@ export class UserController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
+  updateMe(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() UpdateUserDto: UpdateUserDto,
+  ) {
+    return this.userService.update(id, UpdateUserDto);
+  }
+
+  @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() UpdateUserDto: UpdateUserDto,
   ) {
-    return this.userService.update(id, UpdateUserDto)
+    return this.userService.update(id, UpdateUserDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: string) {
-    // return this.userService.remove(+id)
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.remove(id);
   }
 }
